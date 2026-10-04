@@ -419,3 +419,35 @@ No follow-up prompt was needed. The `agent-safety` and `build-harness` skills su
 - Harness (via the `build-harness` skill): [`output/harness.md`](output/harness.md) was rewritten to cover the system overview, how to run, specs and limits, abilities and entry points, all 6 tools and helpers, every model and its fields, safety rules mapped to code controls, the audit trail, verification, and work that is planned but not built. Stale statements were fixed.
 - Database writes: none to the catalogue. Test chats ran as a guest.
 - Website: http://127.0.0.1:5175 (frontend) with the API on http://127.0.0.1:8000.
+
+## Publish: GitHub repo
+
+### Prompt(s)
+
+alright terrific!
+
+Now let's put the code in a folder named hw4 and push it to a public GitHub repo. 
+
+Do NOT put the .env, campus_customs.db, or product images in the GitHub repo. Let's use .gitignore for this. Include .env.example with placeholders only pleae
+
+The agent istelf is four files under backend/: prompts/prompt.md, agent.py, tools.py, models.py
+
+README.md should explain how to run the front end and back end after placing the data pack. 
+
+Ready!? let's gooooO!
+
+### Follow-up prompt
+
+can you create a new GitHub Repo titled Campus Customs Shop?
+
+can you install gh please?
+
+### What was missing after the first prompt
+
+The first prompt didn't name the repo. The follow-ups named it "Campus Customs Shop" and asked to install `gh` so the repo could be created from here.
+
+### Evidence
+
+- Public repo: https://github.com/rbdaly16/Campus-Customs-Shop. The code is in `hw4/`, and the agent is the four files in `hw4/backend/`. `hw4/README.md` explains placing the data pack, setting up `.env`, and running both servers. `hw4/.env.example` has placeholders only.
+- `.gitignore` excludes `.env`/`.env.*` (keeps `.env.example`), `/data` (the database and product images, including a symlinked `data`), `*.db`, `.venv`, `node_modules`, and build output. Each rule was tested in a scratch repo. The 83 files on GitHub contain no `.env`, database, `data/`, or dependencies. A scan for real secret values found none.
+- The `hw4` copy was run standalone (102 products served, images load, database file returns 404). The agent now reads `hw4/.env` first.
