@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Campus Customs: App Check (Problem 11)</title>
+<style>
+  :root { --yale: #00356b; --accent: #286dc0; --paper: #f7f9fc; --line: #dbe3ee; --ink: #14202e; --muted: #5a6778; --pass: #1e7b45; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: var(--paper); line-height: 1.55; }
+  header { background: var(--yale); color: #fff; padding: 2rem 1.5rem 1.6rem; border-bottom: 4px solid #fff; box-shadow: 0 4px 0 var(--yale); }
+  header .wrap, main { max-width: 1080px; margin: 0 auto; }
+  header h1 { margin: 0 0 0.4rem; font-family: Georgia, serif; font-size: 2rem; }
+  header p { margin: 0; color: #c9dbf2; }
+  main { padding: 1.5rem; }
+  .summary { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin: 0.5rem 0 2rem; }
+  .summary th, .summary td { text-align: left; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .summary th { background: #e7eff9; color: var(--yale); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .summary tr:last-child td { border-bottom: 0; }
+  .summary a { color: var(--accent); font-weight: 600; }
+  .pass { display: inline-block; background: #e3f4ea; color: var(--pass); font-weight: 700; padding: 0.1rem 0.55rem; border-radius: 999px; font-size: 0.85rem; }
+  section.check { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.5rem; margin: 0 0 2rem; box-shadow: 0 2px 8px rgba(0, 53, 107, 0.06); }
+  section.check h2 { margin: 0 0 0.25rem; color: var(--yale); font-family: Georgia, serif; font-size: 1.5rem; }
+  .meta { margin: 0 0 1rem; color: var(--muted); font-size: 0.92rem; }
+  figure { margin: 0 0 1.25rem; }
+  figure img { display: block; width: 100%; height: auto; border: 2px solid var(--yale); border-radius: 10px; }
+  figcaption { margin-top: 0.6rem; font-size: 1.02rem; }
+  figcaption strong { color: var(--yale); }
+  details { font-size: 0.9rem; color: var(--muted); }
+  details summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+  details ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+  code { background: #eef2f8; padding: 0.05rem 0.35rem; border-radius: 4px; font-size: 0.88em; }
+  header code { background: rgba(255, 255, 255, 0.16); color: #fff; }
+  footer { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 2rem; color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Campus Customs: App Check</h1>
+    <p>Problem 11 · Live-site test run on Oct 4, 2026 · frontend <code>http://127.0.0.1:5175</code>, backend <code>uvicorn main:app --reload --port 8000</code> (from <code>backend/</code>)</p>
+  </div>
+</header>
+
+<main>
+  <p>Each screenshot was taken from the running site in a fresh browser session, as a guest. Every number on screen was then checked against <code>data/campus_customs.db</code>.</p>
+
+  <table class="summary">
+    <thead><tr><th>#</th><th>Check</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><a href="#check-1">Chat checks an item's inventory (honest stock and price from the DB)</a></td><td><span class="pass">PASS</span></td></tr>
+      <tr><td>2</td><td><a href="#check-2">Category question puts dynamic search-result cards on the page</a></td><td><span class="pass">PASS</span></td></tr>
+      <tr><td>3</td><td><a href="#check-3">Problem 9 usability feature: search, filter, and sort on Products</a></td><td><span class="pass">PASS</span></td></tr>
+    </tbody>
+  </table>
+
+  <section class="check" id="check-1">
+    <h2>1. Chat checks the inventory level of an item</h2>
+    <p class="meta">Page: Grace Hopper College Crewneck · Asked: “How many do you have left in XL and in L? And what is the price?”</p>
+    <figure>
+      <img src="app_check_images/inventory.png" alt="Chat answering $58.00, 2 left in XL, L sold out, next to the product page's size boxes" />
+      <figcaption>
+        <strong>What this proves:</strong> Dan answers <strong>$58.00, 2 left in XL (low stock), and L sold out</strong>, which matches the page's own size boxes and the database exactly (price 58.0, XL = 2, L = 0). Because L is sold out, he suggests three crewnecks that really are in stock in L.
+      </figcaption>
+    </figure>
+    <details>
+      <summary>How it was verified</summary>
+      <ul>
+        <li>Server log for this turn: <code>check_stock(grace-hopper-college-crewneck, XL)</code> → <code>check_stock(…, L)</code> → <code>find_similar_products(…, size=L)</code>, so the numbers came from database lookups, not the model's memory.</li>
+        <li>SQL: <code>inventory</code> has XS 12 · S 8 · M 25 · L 0 · XL 2 · XXL 15; <code>catalogue.price</code> = 58.0.</li>
+        <li>The suggested alternatives are in stock in L: Saybrook 2, Davenport 12, Lacrosse Left Chest 20.</li>
+        <li>The price fact-check guard (Problem 9) allows only prices from this turn's lookups, and $58.00 passed.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="check" id="check-2">
+    <h2>2. Dynamic search-result cards after a category question</h2>
+    <p class="meta">Started on the Home page · Asked in chat: “What hoodies do you have?”</p>
+    <figure>
+      <img src="app_check_images/search_cards.png" alt="Products page showing a From your chat: Hoodies, 27 items section of product cards" />
+      <figcaption>
+        <strong>What this proves:</strong> the agent searched the catalogue and returned structured matches. The site then moved to Products and showed a <strong>“From your chat · Hoodies · 27 items”</strong> grid of cards (image, name, price, short description). The 27 cards are exactly the 27 hoodies in the database, and the chat quotes the same count.
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="app_check_images/search_card_opens_product.png" alt="Clicking the first chat-placed card opens the Ua Gameday Double Knit Hood product page" />
+      <figcaption>
+        <strong>What this proves:</strong> a card the chat placed on the page still opens the normal single-item page (large image, description, $45.00, and stock by size), the same behavior as Problem 3.
+      </figcaption>
+    </figure>
+    <details>
+      <summary>How it was verified</summary>
+      <ul>
+        <li>Server log: <code>search_products(garment_type="hoodie", limit=48)</code>, then <code>page_results</code> with 27 product ids.</li>
+        <li>The set of card ids on the page equals <code>SELECT product_id FROM catalogue WHERE lower(garment_type) LIKE '%hood%'</code> (27 rows).</li>
+        <li>Clicked the first card and landed on <code>/products/ua-gameday-double-knit-hood</code>.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="check" id="check-3">
+    <h2>3. Usability feature (Problem 9): search, filter, and sort on Products</h2>
+    <p class="meta">Clicked the <em>Hoodies</em> chip → “In stock in” <em>XL</em> → Sort <em>Price: low to high</em></p>
+    <figure>
+      <img src="app_check_images/usability_filters.png" alt="Products toolbar with Hoodies selected, XL in stock, sorted by price, showing 21 of 102 items" />
+      <figcaption>
+        <strong>What this proves:</strong> in three clicks a shopper narrows 102 products to the <strong>21 hoodies actually in stock in XL</strong>, cheapest first ($45.00). Category chips show live counts, and the filters are saved in the URL (<code>?category=hoodie&amp;size=XL&amp;sort=price-asc</code>) so the view can be shared.
+      </figcaption>
+    </figure>
+    <details>
+      <summary>How it was verified</summary>
+      <ul>
+        <li>The 21 product ids on screen equal the SQL set of hoodies with <code>inventory.size = 'XL' AND quantity &gt; 0</code>.</li>
+        <li>Prices run in ascending order from $45.00 to $88.00. The chip counts (Hoodies 27, Crewnecks 29, T-shirts 25, …) match the catalogue.</li>
+      </ul>
+    </details>
+  </section>
+</main>
+
+<footer>
+  Screenshots: <code>output/app_check_images/</code> · Raw values captured during the run: <a href="app_check_results.json">app_check_results.json</a> · Campus Customs, HW 4
+</footer>
+</body>
+</html>

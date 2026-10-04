@@ -1,0 +1,78 @@
+{
+ "inventory": {
+  "question": "How many do you have left in XL and in L? And what is the price?",
+  "reply": "The Grace Hopper College Crewneck is $58.00. We have 2 left in XL—low stock—and L is sold out. For an L, Saybrook College Crewneck is a close navy crewneck alternative, with Davenport College Crewneck and Lacrosse Left Chest Crewneck also available in L.\n\nSaybrook College Crewneck\n$58.00\nDavenport College Crewneck\n$58.00\nLacrosse Left Chest Crewneck\n$58.00",
+  "pageSizes": null,
+  "pagePrice": "$58.00"
+ },
+ "search": {
+  "question": "What hoodies do you have?",
+  "path": "/products",
+  "heading": "Hoodies · 27 items",
+  "reply": "We found 27 hoodies—including the Basic Hoodie Big Yale, District Vintage Bulldog Hoodie, and Champion Full Zip Hood. I’ve put the full collection on the page for you; woof, plenty of Yale spirit to choose from!\n\nView all 27 on the page →",
+  "cardIds": [
+   "ua-gameday-double-knit-hood",
+   "yale-sports-hoodie-tennis",
+   "basic-hoodie-big-yale",
+   "champion-reverse-weave-hoodie-1",
+   "crew-left-chest-hoodie",
+   "district-vit-hoodie-vintage-bulldog",
+   "district-vit-hoodie-vintage-sailor-bulldog",
+   "fencing-left-chest-hoodie",
+   "ice-hockey-left-chest-hoodie",
+   "sailing-left-chest-hoodie",
+   "squash-left-chest-hoodie",
+   "the-forest-school-hoodie",
+   "volleyball-left-chest-hoodie",
+   "yale-aunt-hoodie",
+   "yale-dad-hoodie",
+   "yale-grandma-hoodie",
+   "yale-grandpa-hoodie",
+   "yale-mom-hoodie",
+   "yale-sports-hoodie-baseball",
+   "yale-sports-hoodie-diving",
+   "yale-sports-hoodie-golf",
+   "yale-sports-hoodie-hockey",
+   "yale-sports-hoodie-soccer",
+   "yale-sports-hoodie-swimming",
+   "yale-uncle-hoodie",
+   "brooks-brothers-double-knit-full-zip-hoodie-yale",
+   "champion-full-zip-hood"
+  ],
+  "clickedCardPath": "/products/ua-gameday-double-knit-hood",
+  "clickedCardTitle": "Ua Gameday Double Knit Hood"
+ },
+ "filters": {
+  "summary": "Showing 21 of 102 itemsClear filters",
+  "url": "/products?category=hoodie&size=XL&sort=price-asc",
+  "ids": [
+   "yale-sports-hoodie-tennis",
+   "basic-hoodie-big-yale",
+   "crew-left-chest-hoodie",
+   "district-vit-hoodie-vintage-bulldog",
+   "district-vit-hoodie-vintage-sailor-bulldog",
+   "fencing-left-chest-hoodie",
+   "sailing-left-chest-hoodie",
+   "squash-left-chest-hoodie",
+   "the-forest-school-hoodie",
+   "volleyball-left-chest-hoodie",
+   "yale-aunt-hoodie",
+   "yale-dad-hoodie",
+   "yale-grandpa-hoodie",
+   "yale-mom-hoodie",
+   "yale-sports-hoodie-diving",
+   "yale-sports-hoodie-golf",
+   "yale-sports-hoodie-hockey",
+   "yale-sports-hoodie-soccer",
+   "yale-uncle-hoodie",
+   "brooks-brothers-double-knit-full-zip-hoodie-yale",
+   "champion-full-zip-hood"
+  ],
+  "firstPrices": [
+   "$45.00",
+   "$68.00",
+   "$68.00",
+   "$68.00"
+  ]
+ }
+}
